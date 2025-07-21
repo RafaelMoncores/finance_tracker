@@ -55,6 +55,15 @@ class AlphaVantageClient
     handle_response(self.class.get("/query", options))
   end
 
+  def price(symbol) # Este é o método de atalho que criamos para você!
+    quote = get_quote(symbol) # Ele simplesmente chama o método `get_quote` que já existe.
+    if quote.present? && quote["Global Quote"].present? # Verifica se a resposta não está vazia e tem a parte "Global Quote"
+      quote["Global Quote"]["05. price"].to_f # Pega o preço (que tem a chave "05. price") e o converte para um número com casas decimais.
+    else
+      nil # Se não conseguir o preço, retorna nada.
+    end
+  end
+
 
   private
 
