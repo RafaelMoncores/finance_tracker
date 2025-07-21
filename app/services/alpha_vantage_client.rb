@@ -16,7 +16,7 @@ class AlphaVantageClient
 
   # --- Métodos para interagir com a API ---
 
-  # Exemplo: Obter dados de séries temporais diárias (Daily Adjusted)
+  # Obter dados de séries temporais diárias (Daily Adjusted)
   # Documentação: https://www.alphavantage.co/documentation/#dailyadj
   def get_daily_adjusted(symbol)
     options = {
@@ -29,7 +29,7 @@ class AlphaVantageClient
     handle_response(self.class.get("/query", options))
   end
 
-  # Exemplo: Obter a cotação em tempo real (Global Quote)
+  # Obter a cotação em tempo real (Global Quote)
   # Documentação: https://www.alphavantage.co/documentation/#quote
   def get_quote(symbol)
     options = {
@@ -42,7 +42,20 @@ class AlphaVantageClient
     handle_response(self.class.get("/query", options))
   end
 
-  # Exemplo: Obter dados financeiros (income statement, balance sheet, cash flow)
+  # Novo método: Obter o Overview da empresa (inclui nome da empresa, descrição, etc.)
+  # Documentação: https://www.alphavantage.co/documentation/#company-overview
+  def get_company_overview(symbol)
+    options = {
+      query: {
+        function: "OVERVIEW", # Função para detalhes da empresa
+        symbol: symbol,
+        apikey: @api_key
+      }
+    }
+    handle_response(self.class.get("/query", options))
+  end
+
+  # Obter dados financeiros (income statement, balance sheet, cash flow)
   # Documentação: https://www.alphavantage.co/documentation/#financial-statements
   def get_income_statement(symbol)
     options = {
@@ -55,15 +68,25 @@ class AlphaVantageClient
     handle_response(self.class.get("/query", options))
   end
 
-  def price(symbol) # Este é o método de atalho que criamos para você!
-    quote = get_quote(symbol) # Ele simplesmente chama o método `get_quote` que já existe.
-    if quote.present? && quote["Global Quote"].present? # Verifica se a resposta não está vazia e tem a parte "Global Quote"
-      quote["Global Quote"]["05. price"].to_f # Pega o preço (que tem a chave "05. price") e o converte para um número com casas decimais.
+  # Este é o método de atalho para obter o preço atual
+  def price(symbol)
+    quote = get_quote(symbol)
+    if quote.present? && quote["Global Quote"].present?
+      quote["Global Quote"]["05. price"].to_f
     else
-      nil # Se não conseguir o preço, retorna nada.
+      nil
     end
   end
 
+  # Novo método de atalho para obter o nome da empresa
+  def company_name(symbol)
+    overview = get_company_overview(symbol)
+    if overview.present? && overview["Name"].present?
+      overview["Name"]
+    else
+      nil
+    end
+  end
 
   private
 
