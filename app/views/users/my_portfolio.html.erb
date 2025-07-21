@@ -1,2 +1,15 @@
-<h1>Users#my_portfolio</h1>
-<p>Find me in app/views/users/my_portfolio.html.erb</p>
+<h1>My Portfolio</h1>
+
+<h3 class="mt-5">Search Stocks</h3>
+<%= form_tag "#", method: :get do %>
+    <div class="form-group row">
+        <div class="col-sm-9" id="stock-lookup">
+            <%= text_field_tag :stock, params[:stock], placeholder: "Stock ticker symbol", autofocus: true, class: "form-control form-control-lg" %>
+        </div>
+        <div class="col-sm-3" id="stock-lookup-button">
+            <%= button_tag type: :submit, class: "btn btn-success btn-lg" do %>
+                Search
+            <% end %>
+        </div>
+    </div>
+<% end %>
