@@ -5,6 +5,10 @@
                 <strong>Symbol: </strong><%= @stock.ticker %><br>
                 <strong>Name: </strong><%= @stock.name %><br>
                 <strong>Price: </strong><%= number_to_currency(@stock.last_price) %>
+                <%= button_to "Add to Portfolio", user_stocks_path,
+                          params: { user: current_user, ticker: @stock.ticker },
+                          method: :post,
+                          class: "btn btn-success" %>
             </p>
         </div>
     </div>
