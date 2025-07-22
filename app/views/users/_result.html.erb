@@ -5,10 +5,24 @@
                 <strong>Symbol: </strong><%= @stock.ticker %><br>
                 <strong>Name: </strong><%= @stock.name %><br>
                 <strong>Price: </strong><%= number_to_currency(@stock.last_price) %>
-                <%= button_to "Add to Portfolio", user_stocks_path,
-                          params: { user: current_user, ticker: @stock.ticker },
-                          method: :post,
-                          class: "btn btn-success" %>
+                <% if current_user.can_track_stock?(@stock.ticker)%>
+                    <div>
+                        <%= button_to "Add to Portfolio", user_stocks_path,
+                                params: { user: current_user, ticker: @stock.ticker },
+                                method: :post,
+                                class: "btn btn-success" %>
+                    </div>
+                <% else %>
+                    <span class= "badge bg-secondary">
+                        <strong>Already tracking</strong>
+                        <% if !current_user.under_stock_limit? %>
+                            10 stocks limit reached
+                        <% end %>
+                        <% if current_user.stock_already_tracked?(@stock.ticker) %>
+                            this stock
+                        <% end %>
+                    </span>
+                <% end %>
             </p>
         </div>
     </div>
