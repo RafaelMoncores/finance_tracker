@@ -1,10 +1,10 @@
-<% if @stock %>
+<% if @stock.present? %>
     <div class="card mt-3">
         <div class="card-body">
             <p class="card-text">
-                <strong>Símbolo: </strong><%= @stock.ticker %><br>
-                <strong>Nome: </strong><%= @stock.name %><br>
-                <strong>Preço: </strong><%= number_to_currency(@stock.last_price) %>
+                <strong>Symbol: </strong><%= @stock.ticker %><br>
+                <strong>Name: </strong><%= @stock.name %><br>
+                <strong>Price: </strong><%= number_to_currency(@stock.last_price) %>
             </p>
         </div>
     </div>
