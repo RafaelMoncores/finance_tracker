@@ -29,7 +29,7 @@
                     </span>
                     <%= form_with url: friendships_path, method: :post, local: true do |f| %>
                         <%= hidden_field_tag :friend_id, friend.id %>
-                        <%= f.submit "Adicionar Amigo", class: "btn btn-primary btn-sm" %>
+                        <%= f.submit "Add Friend", class: "btn btn-primary btn-sm" %>
                     <% end %>
                 </li>
             <% end %>
