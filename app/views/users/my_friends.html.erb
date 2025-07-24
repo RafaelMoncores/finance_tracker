@@ -1,0 +1,43 @@
+<h1>My Friends</h1>
+
+<h3 class="mt-5">Search Friends</h3>
+
+<div id="search-friends">
+    <%= form_tag search_friend_path, method: :get do %>
+    <div class="form-group row">
+      <div class="col-sm-9" id="friend-lookup">
+        <%= text_field_tag :friend, params[:friend], placeholder: "Friend email or name", autofocus: true, class: "form-control form-control-lg" %>
+      </div>
+      <div class="col-sm-3" id="friend-lookup-button">
+        <%= button_tag type: :submit, class: "btn btn-success btn-lg" do %>
+          Search
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<% if defined?(@friends) && @friends.any? %>
+  <div class="mt-4">
+    <h4>Search Results:</h4>
+    <div class="row">
+        <div class="col-9">
+            <ul class="list-group">
+            <% @friends.each do |friend| %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <%= friend.full_name %> - <%= friend.email %>
+                    </span>
+                    <%= form_with url: friendships_path, method: :post, local: true do |f| %>
+                        <%= hidden_field_tag :friend_id, friend.id %>
+                        <%= f.submit "Adicionar Amigo", class: "btn btn-primary btn-sm" %>
+                    <% end %>
+                </li>
+            <% end %>
+            </ul>
+        </div>
+    </div>
+  </div>
+<% end %>
+<% if !@friendships.nil? %>
+    <%= render 'friendships/list', friendships: @friendships %>
+<% end %>
