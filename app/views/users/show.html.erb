@@ -1,0 +1,11 @@
+<h2>Friend Details:</h2>
+<div class="mb-4">
+  <strong>Name:</strong> <%= @friend.full_name %><br>
+  <strong>Email:</strong> <%= @friend.email %>
+</div>
+
+<h3>Tracked Stocks</h3>
+<%= render 'stocks/list', user_stocks: @user_stocks, show_actions: false %>
+
+<h3 class="mt-5">Friends</h3>
+<%= render 'friendships/list', friendships: @friendships, show_actions: false %>

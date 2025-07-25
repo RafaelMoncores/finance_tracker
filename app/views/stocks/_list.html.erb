@@ -6,7 +6,9 @@
                 <th scope="col">Ticker</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
-                <th scope="col">Actions</th>
+                <% if local_assigns[:show_actions] != false %>
+                  <th scope="col">Actions</th>
+                <% end %>
                 </tr>
             </thead>
             <tbody>
@@ -15,12 +17,14 @@
                         <th scope="row"><%= user_stock.stock.ticker %></th>
                         <td><%= user_stock.stock.name %></td>
                         <td><%= number_to_currency(user_stock.stock.last_price) %></td>
-                        <td>
-                            <%= button_to "Remove", user_stock_path(user_stock),
-                                          method: :delete,
-                                          data: { confirm: "Are you sure?" },
-                                          class: "btn btn-sm btn-warning" %>
-                        </td>
+                        <% if local_assigns[:show_actions] != false %>
+                          <td>
+                              <%= button_to "Remove", user_stock_path(user_stock),
+                                            method: :delete,
+                                            data: { confirm: "Are you sure?" },
+                                            class: "btn btn-sm btn-warning" %>
+                          </td>
+                        <% end %>
                     </tr>
                 <% end %>
             </tbody>

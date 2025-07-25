@@ -7,6 +7,12 @@ class UsersController < ApplicationController
     @friendships = current_user.friendships
   end
 
+  def show
+    @friend = User.find(params[:id])
+    @user_stocks = @friend.user_stocks
+    @friendships = @friend.friendships
+  end
+
   def search_friend
     if params[:friend].present?
       @friends = User.where("email LIKE ? OR first_name LIKE ? OR last_name LIKE ?",

@@ -27,9 +27,14 @@
                     <span>
                         <%= friend.full_name %> - <%= friend.email %>
                     </span>
-                    <%= form_with url: friendships_path, method: :post, local: true do |f| %>
-                        <%= hidden_field_tag :friend_id, friend.id %>
-                        <%= f.submit "Add Friend", class: "btn btn-primary btn-sm" %>
+                    <% already_friend = current_user.friends.include?(friend) %>
+                    <% if already_friend %>
+                        <%= link_to "View Profile", user_path(friend), class: "btn btn-success btn-sm" %>
+                    <% else %>
+                        <%= form_with url: friendships_path, method: :post, local: true do |f| %>
+                            <%= hidden_field_tag :friend_id, friend.id %>
+                            <%= f.submit "Add Friend", class: "btn btn-primary btn-sm" %>
+                        <% end %>
                     <% end %>
                 </li>
             <% end %>
